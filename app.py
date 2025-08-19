@@ -4,6 +4,7 @@ from models import db, User, Location
 from config import Config
 from forms import LocationForm
 from datetime import datetime
+import os
 import json
 
 # Створюємо Flask додаток
@@ -27,6 +28,7 @@ def load_user(user_id):
 
 # Головна сторінка
 
+
 @app.route('/')
 def index():
     problem_type = request.args.get('problem_type', 'all')
@@ -45,12 +47,15 @@ def index():
 
     # Функція для форматування адреси
     def format_address(address):
-        with open("./static/street-names.json", "r", encoding="utf-8") as f:
-            adresses = json.load(f)
-            for k, v in adresses.items():
+        # абсолютний шлях до файлу, незалежно від робочої директорії
+        file_path = os.path.join(os.path.dirname(
+            __file__), "static", "street-names.json")
+        with open(file_path, "r", encoding="utf-8") as f:
+            addresses = json.load(f)
+            for k, v in addresses.items():
                 if address.startswith(k):
                     return address.replace(k, v)
-            return address
+        return address
 
     # Форматуємо адреси
     for location in locations:
@@ -349,7 +354,6 @@ def export_excel():
         download_name=filename,
         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-
 
 
 @app.route('/location/<int:location_id>/map')
