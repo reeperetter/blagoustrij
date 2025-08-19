@@ -97,7 +97,7 @@ def login():
         if user:
             print(f"Користувач знайдений: {user.username}")  # Відладка
             if user.check_password(password):
-                login_user(user)
+                login_user(user, remember=True)
                 flash('Ви успішно увійшли!', 'success')
                 return redirect(url_for('index'))
             else:
