@@ -4,6 +4,7 @@ from models import db, User, Location
 from config import Config
 from forms import LocationForm
 from datetime import datetime
+import json
 
 # Створюємо Flask додаток
 app = Flask(__name__)
@@ -26,7 +27,6 @@ def load_user(user_id):
 
 # Головна сторінка
 
-
 @app.route('/')
 def index():
     problem_type = request.args.get('problem_type', 'all')
@@ -45,11 +45,12 @@ def index():
 
     # Функція для форматування адреси
     def format_address(address):
-        if address.startswith('вул. Хортицьке шосе'):
-            return address.replace('вул. Хортицьке шосе', 'шосе Хортицьке')
-        elif address.startswith('просп.'):
-            return address.replace('просп.', 'пр.')
-        return address
+        with open("./static/street-names.json", "r", encoding="utf-8") as f:
+            adresses = json.load(f)
+            for k, v in adresses.items():
+                if address.startswith(k):
+                    return address.replace(k, v)
+            return address
 
     # Форматуємо адреси
     for location in locations:
