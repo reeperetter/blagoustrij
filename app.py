@@ -4,7 +4,7 @@ from models import db, User, Location
 from config import Config
 from forms import LocationForm
 from datetime import datetime
-import os
+from pathlib import Path
 import json
 
 # Створюємо Flask додаток
@@ -48,8 +48,7 @@ def index():
     # Функція для форматування адреси
     def format_address(address):
         # абсолютний шлях до файлу, незалежно від робочої директорії
-        file_path = os.path.join(os.path.dirname(
-            __file__), "static", "street-names.json")
+        file_path = Path(__file__).parent / "static" / "street-names.json"
         with open(file_path, "r", encoding="utf-8") as f:
             addresses = json.load(f)
             for k, v in addresses.items():
