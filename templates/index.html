@@ -48,6 +48,16 @@
                             <option value="completed" {% if current_status == 'completed' %}selected{% endif %}>Виконано</option>
                         </select>
                     </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Сортування</label>
+                        <select name="sort_by" class="form-select" onchange="this.form.submit()">
+                            <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>За пріоритетом</option>
+                            <option value="alphabet" {% if current_sort == 'alphabet' %}selected{% endif %}>За алфавітом</option>
+                        </select>
+                        <input type="hidden" name="problem_type" value="{{ current_problem_type }}">
+                        <input type="hidden" name="status" value="{{ current_status }}">
+                        <input type="hidden" name="priority" value="{{ current_priority }}">
+                    </div>
                     <div class="col-md-3 d-flex align-items-end">
                         <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Скинути фільтри</a>
                     </div>
@@ -126,9 +136,10 @@
 
 {% if locations %}
     <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped" style="text-align: center;">
         <thead>
             <tr>
+                <th style="width: fit-content;">!</th>
                 <th>Адреса</th>
                 <th>Тип проблеми</th>
                 <th>Статус</th>
@@ -141,7 +152,16 @@
         <tbody>
             {% for location in locations %}
             <tr>
-                <td>{{ location.address }}</td>
+                <td>
+                    {% if location.priority == 'Високий' %}
+                        <span class="badge bg-danger rounded-circle" style="width: 12px; height: 12px;" title="Високий пріоритет">&nbsp;</span>
+                    {% elif location.priority == 'Середній' %}
+                        <span class="badge bg-warning rounded-circle" style="width: 12px; height: 12px;" title="Середній пріоритет">&nbsp;</span>
+                    {% else %}
+                        <span class="badge bg-success rounded-circle" style="width: 12px; height: 12px;" title="Низький пріоритет">&nbsp;</span>
+                    {% endif %}
+                </td>
+                <td style="text-align: left;">{{ location.address }}</td>
                 <td>
                     {% if location.problem_type == 'Гілля' %}
                         <span class="badge border border-warning text-warning bg-transparent">{{ location.problem_type }}</span>

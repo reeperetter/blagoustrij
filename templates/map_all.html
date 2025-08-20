@@ -122,6 +122,15 @@
                                         <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
                                     </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label small">Пріоритет:</label>
+                                    <select name="priority" class="form-select form-select-sm" onchange="this.form.submit()">
+                                        <option value="all" {% if current_priority == 'all' %}selected{% endif %}>Всі пріоритети</option>
+                                        <option value="Високий" {% if current_priority == 'Високий' %}selected{% endif %}>Високий</option>
+                                        <option value="Середній" {% if current_priority == 'Середній' %}selected{% endif %}>Середній</option>
+                                        <option value="Низький" {% if current_priority == 'Низький' %}selected{% endif %}>Низький</option>
+                                    </select>
+                                </div>
                                 <div class="d-grid">
                                     <a href="{{ url_for('map_all') }}" class="btn btn-outline-secondary btn-sm">
                                         <i class="fas fa-undo me-1"></i>Скинути фільтри

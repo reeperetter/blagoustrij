@@ -19,6 +19,12 @@ class LocationForm(FlaskForm):
                                                              'Листя'), ('Звалища', 'Звалища')],
                                validators=[DataRequired()])
 
+    priority = SelectField('Пріоритет',
+                           choices=[('Високий', 'Високий'), ('Середній',
+                                                             'Середній'), ('Низький', 'Низький')],
+                           default='Середній',
+                           validators=[DataRequired()])
+
     description = TextAreaField('Опис проблеми',
                                 render_kw={"placeholder": "Детальний опис проблеми...", "rows": 3})
 

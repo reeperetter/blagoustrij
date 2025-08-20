@@ -33,6 +33,8 @@ def load_user(user_id):
 def index():
     problem_type = request.args.get('problem_type', 'all')
     status = request.args.get('status', 'all')
+    priority = request.args.get('priority', 'all')
+    sort_by = request.args.get('sort_by', 'priority')
 
     query = Location.query
 
@@ -49,8 +51,12 @@ def index():
     for location in locations:
         location.formatted_address = format_address(location.address)
 
-    # Сортуємо по відформатованій адресі
-    locations.sort(key=lambda x: x.formatted_address)
+    # Сортування
+    if sort_by == 'alphabet':
+        locations.sort(key=lambda x: x.formatted_address)
+    else:  # sort_by == 'priority'
+        locations.sort(key=lambda x: (
+            x.get_priority_order(), x.formatted_address))
 
     # Оновлюємо оригінальні адреси для відображення
     for location in locations:
@@ -59,13 +65,14 @@ def index():
     # Статистика для поточного фільтру
     total_count = len(locations)
     completed_count = len([l for l in locations if l.status == 'completed'])
-    in_progress_count = len(
-        [l for l in locations if l.status == 'in_progress'])
+    in_progress_count = len([l for l in locations if l.status == 'in_progress'])
 
     return render_template('index.html',
                            locations=locations,
                            current_problem_type=problem_type,
                            current_status=status,
+                           current_priority=priority,
+                           current_sort=sort_by,
                            total_count=total_count,
                            completed_count=completed_count,
                            in_progress_count=in_progress_count)
@@ -134,6 +141,7 @@ def add_location():
             latitude=form.latitude.data,
             longitude=form.longitude.data,
             problem_type=form.problem_type.data,
+            priority=form.priority.data,
             description=form.description.data,
             created_by=current_user.id
         )
@@ -150,6 +158,7 @@ def add_location():
 @app.route('/map')
 def map_all():
     problem_type = request.args.get('problem_type', 'all')
+    priority = request.args.get('priority', 'all')
 
     # Показуємо тільки завдання в роботі
     query = Location.query.filter(Location.status == 'in_progress')
@@ -157,14 +166,17 @@ def map_all():
     if problem_type != 'all':
         query = query.filter(Location.problem_type == problem_type)
 
+    if priority != 'all':
+        query = query.filter(Location.priority == priority)
+
     locations = query.all()
 
     # Форматуємо адреси
     for location in locations:
         location.formatted_address = format_address(location.address)
 
-    # Сортуємо по відформатованій адресі
-    locations.sort(key=lambda x: x.formatted_address)
+    # Сортуємо за пріоритетом, потім за алфавітом
+    locations.sort(key=lambda x: (x.get_priority_order(), x.formatted_address))
 
     # Оновлюємо оригінальні адреси для відображення
     for location in locations:
@@ -179,6 +191,7 @@ def map_all():
     return render_template('map_all.html',
                            locations=locations,
                            current_problem_type=problem_type,
+                           current_priority=priority,
                            total_count=total_count,
                            branches_count=branches_count,
                            leaves_count=leaves_count,
@@ -203,6 +216,7 @@ def edit_location(id):
         location.latitude = form.latitude.data
         location.longitude = form.longitude.data
         location.problem_type = form.problem_type.data
+        location.priority = form.priority.data
         location.description = form.description.data
 
         db.session.commit()
@@ -296,6 +310,8 @@ def export_excel():
     # Отримуємо ті ж фільтри, що і на головній сторінці
     problem_type = request.args.get('problem_type', 'all')
     status = request.args.get('status', 'all')
+    priority = request.args.get('priority', 'all')
+    sort_by = request.args.get('sort_by', 'priority')
 
     # Базовий запит
     query = Location.query
@@ -303,11 +319,23 @@ def export_excel():
     # Застосовуємо фільтри
     if problem_type != 'all':
         query = query.filter(Location.problem_type == problem_type)
-
     if status != 'all':
         query = query.filter(Location.status == status)
+    if priority != 'all':
+        query = query.filter(Location.priority == priority)
 
-    locations = query.order_by(Location.date_created.desc()).all()
+    # locations = query.order_by(Location.date_created.desc()).all()
+    locations = query.all()
+
+    # Форматуємо адреси та сортуємо так само, як в index
+    for location in locations:
+        location.formatted_address = format_address(location.address)
+
+    if sort_by == 'alphabet':
+        locations.sort(key=lambda x: x.formatted_address)
+    else:
+        locations.sort(key=lambda x: (
+            x.get_priority_order(), x.formatted_address))
 
     # Підготовка даних для Excel
     data = []
@@ -322,6 +350,7 @@ def export_excel():
             'ID': loc.id,
             'Адреса': loc.address,
             'Тип проблеми': loc.problem_type,
+            'Пріоритет': loc.priority,
             'Статус': status_text,
             'Опис': loc.description or '',
             'Широта': loc.latitude,
