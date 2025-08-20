@@ -162,10 +162,10 @@
                         <span class="badge border border-secondary text-secondary bg-transparent">В роботі</span>
                     {% endif %}
                 </td>
-                <td>{{ location.date_created.strftime('%d.%m.%Y %H:%M') }}</td>
+                <td>{{ location.date_created.strftime('%d.%m.%Y') }}</td>
                 <td>
                     {% if location.date_completed %}
-                        <span class="text-success fw-bold">{{ location.date_completed.strftime('%d.%m.%Y %H:%M') }}</span>
+                        <span class="text-success fw-bold"">{{ location.date_completed.strftime('%d.%m.%Y') }}</span>
                     {% else %}
                         <span class="text-muted">—</span>
                     {% endif %}
@@ -191,21 +191,25 @@
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                             <button type="button"
-                                     class="btn btn-sm btn-danger"
-                                     style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
-                                     data-location-id="{{ location.id }}"
+                                    class="btn btn-sm btn-danger"
+                                    style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
+                                    data-location-id="{{ location.id }}"
                                     data-location-address="{{ location.address }}"
                                     onclick="confirmDeleteSafe(this)"
                                     title="Видалити">
                                 <i class="fas fa-times"></i>
                             </button>
                             {% if location.status != 'completed' %}
-                                <a href="{{ url_for('change_status', id=location.id, status='completed') }}"
+                                <button type="button"
+                                    data-problem-type="{{ location.problem_type }}"
                                     class="btn btn-sm btn-success"
                                     style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;" 
+                                    data-location-id="{{ location.id }}"
+                                    data-location-address="{{ location.address }}"
+                                    onclick="confirmComplete(this)"
                                     title="Позначити як виконано">
                                     <i class="fas fa-check"></i>
-                                </a>
+                                </button>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -224,6 +228,30 @@
         {% endif %}
     </div>
 {% endif %}
+
+{# Модальне вікно для підтвердження закриття завдання #}
+<div class="modal fade" id="completeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Закрити завдання</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Закрити завдання:</p>
+                <p><strong id="completeAddress"></strong>: <span class="badge bg-secondary" id="completeProblemType"></span></p>
+                <div class="mb-3">
+                    <label for="completionDate" class="form-label">Дата виконання:</label>
+                    <input type="date" class="form-control" id="completionDate" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                <a href="#" id="confirmCompleteBtn" class="btn btn-success">Закрити завдання</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {# Модальне вікно для підтвердження видалення #}
 <div class="modal fade" id="deleteModal" tabindex="-1">

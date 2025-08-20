@@ -3,7 +3,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from models import db, User, Location
 from config import Config
 from forms import LocationForm
-from datetime import datetime
+from datetime import datetime, date
 from pathlib import Path
 import json
 
@@ -226,7 +226,19 @@ def change_status(id, status):
     location.status = status
 
     if status == 'completed':
-        location.date_completed = datetime.utcnow() #TODO
+        # Отримуємо дату з параметрів запиту
+        completion_date_str = request.args.get('date')
+        if completion_date_str:
+            try:
+                # Парсимо дату з формату YYYY-MM-DD
+                completion_date = datetime.strptime(
+                    completion_date_str, '%Y-%m-%d')
+                location.date_completed = completion_date
+            except ValueError:
+                # Якщо дата некоректна, використовуємо поточну
+                location.date_completed = date.today()
+        else:
+            location.date_completed = date.today()
 
     db.session.commit()
     flash(f'Статус дислокації змінено на "{status}"', 'success')

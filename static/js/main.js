@@ -36,4 +36,31 @@ function showAlert(message, type = "success") {
     }
 }
 
-// Модальне вікно вводу дати при виконанні завдання
+// // Модальне вікно вводу дати при виконанні завдання
+// document.querySelectorAll(".btn-success").forEach(btn => btn.ddEventListener("click", () => {}));
+
+// Функція для підтвердження закриття завдання
+function confirmComplete(button) {
+    const locationId = button.getAttribute("data-location-id");
+    const address = button.getAttribute("data-location-address");
+    const problemType = button.getAttribute("data-problem-type");
+
+    // Заповнюємо модальне вікно
+    document.getElementById("completeAddress").textContent = address;
+    document.getElementById("completeProblemType").textContent = problemType;
+
+    // Встановлюємо поточну дату
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0]; // YYYY-MM-DD формат для input[type="date"]
+    document.getElementById("completionDate").value = formattedDate;
+
+    // Налаштовуємо кнопку підтвердження
+    document.getElementById("confirmCompleteBtn").onclick = function () {
+        const selectedDate = document.getElementById("completionDate").value;
+        window.location.href = `/status/${locationId}/completed?date=${selectedDate}`;
+    };
+
+    // Показуємо модальне вікно
+    const completeModal = new bootstrap.Modal(document.getElementById("completeModal"));
+    completeModal.show();
+}
