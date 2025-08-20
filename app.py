@@ -45,17 +45,6 @@ def index():
     # Отримуємо всі записи
     locations = query.all()
 
-    # Функція для форматування адреси
-    def format_address(address):
-        # абсолютний шлях до файлу, незалежно від робочої директорії
-        file_path = Path(__file__).parent / "static" / "street-names.json"
-        with open(file_path, "r", encoding="utf-8") as f:
-            addresses = json.load(f)
-            for k, v in addresses.items():
-                if address.startswith(k):
-                    return address.replace(k, v)
-        return address
-
     # Форматуємо адреси
     for location in locations:
         location.formatted_address = format_address(location.address)
@@ -80,9 +69,9 @@ def index():
                            total_count=total_count,
                            completed_count=completed_count,
                            in_progress_count=in_progress_count)
+
+
 # Сторінка входу
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Вхід користувача"""
@@ -121,7 +110,6 @@ def logout():
     return redirect(url_for('index'))
 
 # Створення бази даних та тестових даних
-
 # Додавання нової дислокації
 
 
@@ -173,12 +161,14 @@ def map_all():
 
     # Форматуємо адреси
     for location in locations:
-        if location.address.startswith('вул. Хортицьке шосе'):
-            location.address = location.address.replace(
-                'вул. Хортицьке шосе', 'шосе Хортицьке')
+        location.formatted_address = format_address(location.address)
 
-    # Сортуємо по адресі
-    locations.sort(key=lambda x: x.address)
+    # Сортуємо по відформатованій адресі
+    locations.sort(key=lambda x: x.formatted_address)
+
+    # Оновлюємо оригінальні адреси для відображення
+    for location in locations:
+        location.address = location.formatted_address
 
     # Статистика тільки для завдань в роботі
     total_count = len(locations)
@@ -236,7 +226,7 @@ def change_status(id, status):
     location.status = status
 
     if status == 'completed':
-        location.date_completed = datetime.utcnow()
+        location.date_completed = datetime.utcnow() #TODO
 
     db.session.commit()
     flash(f'Статус дислокації змінено на "{status}"', 'success')
@@ -359,6 +349,19 @@ def export_excel():
 def location_map(location_id):
     location = Location.query.get_or_404(location_id)
     return render_template('location_map.html', location=location)
+
+# Функція для форматування адреси
+
+
+def format_address(address):
+    # абсолютний шлях до файлу, незалежно від робочої директорії
+    file_path = Path(__file__).parent / "static" / "street-names.json"
+    with open(file_path, "r", encoding="utf-8") as f:
+        addresses = json.load(f)
+        for k, v in addresses.items():
+            if address.startswith(k):
+                return address.replace(k, v)
+    return address
 
 
 if __name__ == '__main__':

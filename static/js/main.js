@@ -35,3 +35,5 @@ function showAlert(message, type = "success") {
         }, 5000);
     }
 }
+
+// Модальне вікно вводу дати при виконанні завдання
