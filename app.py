@@ -32,7 +32,7 @@ def load_user(user_id):
 @app.route('/')
 def index():
     problem_type = request.args.get('problem_type', 'all')
-    status = request.args.get('status', 'all')
+    status = request.args.get('status', 'in_progress')
     priority = request.args.get('priority', 'all')
     sort_by = request.args.get('sort_by', 'priority')
 
