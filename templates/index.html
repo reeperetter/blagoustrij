@@ -135,7 +135,29 @@
 </div>
 
 {% if locations %}
-    <div class="table-responsive">
+<div class="table-responsive">
+    <!-- Панель пошуку (додайте перед таблицею) -->
+    <div class="search-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text">🔍</span>
+                        <input type="text"
+                            id="searchInput"
+                            class="form-control form-control-lg"
+                            placeholder="Введіть адресу для пошуку"
+                            autocomplete="off">
+                        <button class="btn btn-outline-secondary"
+                                type="button"
+                                id="clearSearch"
+                                title="Очистити пошук">✕</button>
+                    </div>
+                    <div id="searchResults" class="search-results-info"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <table class="table table-striped" style="text-align: center;">
         <thead>
             <tr>
@@ -151,7 +173,7 @@
         </thead>
         <tbody>
             {% for location in locations %}
-            <tr>
+            <tr class="location-row" data-address="{{ location.address }}">
                 <td>
                     {% if location.priority == 'Високий' %}
                         <span class="badge bg-danger rounded-circle" style="width: 12px; height: 12px;" title="Високий пріоритет">&nbsp;</span>
@@ -161,7 +183,7 @@
                         <span class="badge bg-success rounded-circle" style="width: 12px; height: 12px;" title="Низький пріоритет">&nbsp;</span>
                     {% endif %}
                 </td>
-                <td style="text-align: left;">{{ location.address }}</td>
+                <td style="text-align: left;" class="address-cell">{{ location.address }}</td>
                 <td>
                     {% if location.problem_type == 'Гілля' %}
                         <span class="badge border border-warning text-warning bg-transparent">{{ location.problem_type }}</span>
@@ -199,14 +221,14 @@
                     <div class="d-flex gap-1" role="group">
                         <a href="{{ url_for('location_map', location_id=location.id) }}"
                             class="btn btn-sm btn-info text-white"
-                            style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;" 
+                            style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
                             title="Переглянути на карті">
                             <i class="fas fa-map-marker-alt"></i>
                         </a>
                         {% if current_user.is_authenticated and current_user.is_admin() %}
                             <a href="{{ url_for('edit_location', id=location.id) }}"
                                 class="btn btn-sm btn-primary"
-                                style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;" 
+                                style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
                                 title="Редагувати">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
@@ -223,7 +245,7 @@
                                 <button type="button"
                                     data-problem-type="{{ location.problem_type }}"
                                     class="btn btn-sm btn-success"
-                                    style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;" 
+                                    style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
                                     data-location-id="{{ location.id }}"
                                     data-location-address="{{ location.address }}"
                                     onclick="confirmComplete(this)"
@@ -295,4 +317,5 @@
 </div>
 
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/livesearch.js') }}"></script>
 {% endblock %}
