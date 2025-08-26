@@ -1,5 +1,3 @@
-// Загальні функції для всього сайту
-
 // Безпечна функція для data-атрибутів (видалення дислокацій)
 function confirmDeleteSafe(button) {
     const locationId = button.getAttribute("data-location-id");
@@ -13,31 +11,6 @@ function confirmDeleteSafe(button) {
     const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
     deleteModal.show();
 }
-
-// Функція для показу повідомлень
-function showAlert(message, type = "success") {
-    const alertHtml = `
-        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    `;
-
-    const container = document.querySelector(".container-fluid") || document.querySelector(".container");
-    if (container) {
-        container.insertAdjacentHTML("afterbegin", alertHtml);
-
-        setTimeout(function () {
-            const alert = container.querySelector(".alert");
-            if (alert) {
-                alert.remove();
-            }
-        }, 5000);
-    }
-}
-
-// // Модальне вікно вводу дати при виконанні завдання
-// document.querySelectorAll(".btn-success").forEach(btn => btn.ddEventListener("click", () => {}));
 
 // Функція для підтвердження закриття завдання
 function confirmComplete(button) {
@@ -64,3 +37,25 @@ function confirmComplete(button) {
     const completeModal = new bootstrap.Modal(document.getElementById("completeModal"));
     completeModal.show();
 }
+
+// Функція для показу повідомлень
+// function showAlert(message, type = "success") {
+//     const alertHtml = `
+//         <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+//             ${message}
+//             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+//         </div>
+//     `;
+
+//     const container = document.querySelector(".container-fluid") || document.querySelector(".container");
+//     if (container) {
+//         container.insertAdjacentHTML("afterbegin", alertHtml);
+
+//         setTimeout(function () {
+//             const alert = container.querySelector(".alert");
+//             if (alert) {
+//                 alert.remove();
+//             }
+//         }, 5000);
+//     }
+// }

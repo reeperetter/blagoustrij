@@ -109,32 +109,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Функція для показу повідомлень
-    function showNotification(message, type = "success") {
-        const existingAlert = document.querySelector(".address-notification");
-        if (existingAlert) {
-            existingAlert.remove();
-        }
+    // function showNotification(message, type = "success") {
+    //     const existingAlert = document.querySelector(".address-notification");
+    //     if (existingAlert) {
+    //         existingAlert.remove();
+    //     }
 
-        const alertClass = "alert-" + type;
-        const alertHtml = `
-            <div class="alert ${alertClass} alert-dismissible fade show address-notification mt-2">
-                <small>${message}</small>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        `;
+    //     const alertClass = "alert-" + type;
+    //     const alertHtml = `
+    //         <div class="alert ${alertClass} alert-dismissible fade show address-notification mt-2">
+    //             <small>${message}</small>
+    //             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    //         </div>
+    //     `;
 
-        const addressField = document.getElementById("address");
-        if (addressField) {
-            addressField.insertAdjacentHTML("afterend", alertHtml);
+    //     const addressField = document.getElementById("address");
+    //     if (addressField) {
+    //         addressField.insertAdjacentHTML("afterend", alertHtml);
 
-            setTimeout(function () {
-                const alert = document.querySelector(".address-notification");
-                if (alert) {
-                    alert.remove();
-                }
-            }, 5000);
-        }
-    }
+    //         setTimeout(function () {
+    //             const alert = document.querySelector(".address-notification");
+    //             if (alert) {
+    //                 alert.remove();
+    //             }
+    //         }, 5000);
+    //     }
+    // }
 
     // Обробник кліку по карті
     map.on("click", function (e) {

@@ -29,7 +29,7 @@
             </div>
         </nav>
 
-        {# Повідомлення #}
+        <!-- {# Повідомлення #}
         <div class="container mt-3">
             {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
             <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
@@ -37,7 +37,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             {% endfor %} {% endif %} {% endwith %}
-        </div>
+        </div> -->
 
         {# Основний контент #}
         <div class="container mt-4">{% block content %}{% endblock %}</div>
