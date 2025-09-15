@@ -1,0 +1,10 @@
+:root {
+    --body-bg: #f8f9fa;
+    --white: #fff;
+    --white-grey: #dee2e6;
+    --grey: #6c757d;
+    --dark-grey: #212529;
+    --blue: #0d6efd;
+
+    --ff: "system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"";
+}
