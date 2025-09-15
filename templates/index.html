@@ -1,241 +1,209 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h1>Дислокації проблем</h1>
-        <p class="text-muted mb-0">
-            Показано {{ locations|length }}
-            {% if current_problem_type != 'all' or current_status != 'all' %}
-                з {{ total_count }} (застосовано фільтри)
-            {% else %}
-                записів
-            {% endif %}
-        </p>
-    </div>
-    <div class="d-flex gap-2">
-        <!-- Кнопка карти для всіх користувачів -->
-        <a href="{{ url_for('map_all') }}" class="btn btn-info text-white">
-            <i class="fas fa-map me-2"></i>Карта всіх локацій
-        </a>
-        {% if current_user.is_authenticated and current_user.is_admin() %}
-            <a href="{{ url_for('add_location') }}" class="btn btn-success">
-                <i class="fas fa-plus me-2"></i>Додати дислокацію
+<div class="page-header">
+    <div class="page-header__content">
+        <div class="page-header__info">
+            <h1 class="page-header__title">Дислокації проблем</h1>
+            <p class="page-header__subtitle">
+                Показано {{ locations|length }}
+                {% if current_problem_type != 'all' or current_status != 'all' %}
+                    з {{ total_count }} (застосовано фільтри)
+                {% else %}
+                    записів
+                {% endif %}
+            </p>
+        </div>
+        <div class="page-header__actions">
+            <a href="{{ url_for('map_all') }}" class="button button--primary">
+                <i class="fas fa-map"></i> Карта всіх локацій
             </a>
-        {% endif %}
+            {% if current_user.is_authenticated and current_user.is_admin() %}
+                <a href="{{ url_for('add_location') }}" class="button button--success">
+                    <i class="fas fa-plus"></i> Додати дислокацію
+                </a>
+            {% endif %}
+        </div>
     </div>
 </div>
 
 {# Фільтри #}
-<div class="row mb-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <form method="GET" class="row g-3">
-                    <div class="col-md-3">
-                        <label class="form-label">Тип проблеми</label>
-                        <select name="problem_type" class="form-select" onchange="this.form.submit()">
-                            <option value="all" {% if current_problem_type == 'all' %}selected{% endif %}>Всі типи</option>
-                            <option value="Гілля" {% if current_problem_type == 'Гілля' %}selected{% endif %}>Гілля</option>
-                            <option value="Листя" {% if current_problem_type == 'Листя' %}selected{% endif %}>Листя</option>
-                            <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Статус</label>
-                        <select name="status" class="form-select" onchange="this.form.submit()">
-                            <option value="all" {% if current_status == 'all' %}selected{% endif %}>Всі статуси</option>
-                            <option value="in_progress" {% if current_status == 'in_progress' %}selected{% endif %}>В роботі</option>
-                            <option value="completed" {% if current_status == 'completed' %}selected{% endif %}>Виконано</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">Сортування</label>
-                        <select name="sort_by" class="form-select" onchange="this.form.submit()">
-                            <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>За пріоритетом</option>
-                            <option value="alphabet" {% if current_sort == 'alphabet' %}selected{% endif %}>За алфавітом</option>
-                        </select>
-                        <input type="hidden" name="problem_type" value="{{ current_problem_type }}">
-                        <input type="hidden" name="status" value="{{ current_status }}">
-                        <input type="hidden" name="priority" value="{{ current_priority }}">
-                    </div>
-                    <div class="col-md-3 d-flex align-items-end">
-                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Скинути фільтри</a>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-end">
-                        <a href="{{ url_for('export_excel', problem_type=current_problem_type, status=current_status) }}"
-                            class="btn btn-outline-success">
-                            <i class="fas fa-file-excel me-2"></i>📊 Експорт XLSX
-                        </a>
-                    </div>
-                </form>
-            </div>
+<div class="filter-section">
+    <form method="GET" class="filter-section__form">
+        <div class="filter-section__group">
+            <label class="form__label">Тип проблеми</label>
+            <select name="problem_type" class="form__select" onchange="this.form.submit()">
+                <option value="all" {% if current_problem_type == 'all' %}selected{% endif %}>Всі типи</option>
+                <option value="Гілля" {% if current_problem_type == 'Гілля' %}selected{% endif %}>Гілля</option>
+                <option value="Листя" {% if current_problem_type == 'Листя' %}selected{% endif %}>Листя</option>
+                <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
+            </select>
         </div>
-    </div>
+        <div class="filter-section__group">
+            <label class="form__label">Статус</label>
+            <select name="status" class="form__select" onchange="this.form.submit()">
+                <option value="all" {% if current_status == 'all' %}selected{% endif %}>Всі статуси</option>
+                <option value="in_progress" {% if current_status == 'in_progress' %}selected{% endif %}>В роботі</option>
+                <option value="completed" {% if current_status == 'completed' %}selected{% endif %}>Виконано</option>
+            </select>
+        </div>
+        <div class="filter-section__group">
+            <label class="form__label">Сортування</label>
+            <select name="sort_by" class="form__select" onchange="this.form.submit()">
+                <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>За пріоритетом</option>
+                <option value="alphabet" {% if current_sort == 'alphabet' %}selected{% endif %}>За алфавітом</option>
+            </select>
+            <input type="hidden" name="problem_type" value="{{ current_problem_type }}">
+            <input type="hidden" name="status" value="{{ current_status }}">
+            <input type="hidden" name="priority" value="{{ current_priority }}">
+        </div>
+        <div class="filter-section__actions">
+            <a href="{{ url_for('index') }}" class="button button--secondary">Скинути фільтри</a>
+            <a href="{{ url_for('export_excel', problem_type=current_problem_type, status=current_status) }}"
+                class="button button--success">
+                <i class="fas fa-file-excel"></i> Експорт XLSX
+            </a>
+        </div>
+    </form>
 </div>
 
 {# Статистичні картки для поточного фільтру #}
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header pb-3">
-                <h5 class="card-title">
-                    {% if current_problem_type != 'all' %}
-                        {{ current_problem_type }}
-                    {% else %}
-                        Всього дислокацій
-                    {% endif %}
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="h2 font-bold">{{ total_count }}</div>
-                <p class="text-muted small mb-0">
-                    {% if current_problem_type != 'all' %}
-                        Загальна кількість {{ current_problem_type.lower() }}
-                    {% else %}
-                        Загальна кількість
-                    {% endif %}
-                </p>
-            </div>
+<div class="stats-grid">
+    <div class="stats-card">
+        <div class="stats-card__title">
+            {% if current_problem_type != 'all' %}
+                {{ current_problem_type }}
+            {% else %}
+                Всього дислокацій
+            {% endif %}
         </div>
+        <div class="stats-card__value">{{ total_count }}</div>
+        <p class="stats-card__description">
+            {% if current_problem_type != 'all' %}
+                Загальна кількість {{ current_problem_type.lower() }}
+            {% else %}
+                Загальна кількість
+            {% endif %}
+        </p>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header pb-3">
-                <h5 class="card-title">Виконано</h5>
-            </div>
-            <div class="card-body">
-                <div class="h2 font-bold text-success">{{ completed_count }}</div>
-                <p class="text-muted small mb-0">
-                    {% if total_count > 0 %}
-                        {{ "%.0f"|format((completed_count / total_count) * 100) }}% виконано
-                    {% else %}
-                        0% виконано
-                    {% endif %}
-                </p>
-            </div>
-        </div>
+    <div class="stats-card">
+        <div class="stats-card__title">Виконано</div>
+        <div class="stats-card__value stats-card__value--success">{{ completed_count }}</div>
+        <p class="stats-card__description">
+            {% if total_count > 0 %}
+                {{ "%.0f"|format((completed_count / total_count) * 100) }}% виконано
+            {% else %}
+                0% виконано
+            {% endif %}
+        </p>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header pb-3">
-                <h5 class="card-title">В роботі</h5>
-            </div>
-            <div class="card-body">
-                <div class="h2 font-bold text-warning">{{ in_progress_count }}</div>
-                <p class="text-muted small mb-0">
-                    {% if total_count > 0 %}
-                        {{ "%.0f"|format((in_progress_count / total_count) * 100) }}% в роботі
-                    {% else %}
-                        0% в роботі
-                    {% endif %}
-                </p>
-            </div>
-        </div>
+    <div class="stats-card">
+        <div class="stats-card__title">В роботі</div>
+        <div class="stats-card__value stats-card__value--warning">{{ in_progress_count }}</div>
+        <p class="stats-card__description">
+            {% if total_count > 0 %}
+                {{ "%.0f"|format((in_progress_count / total_count) * 100) }}% в роботі
+            {% else %}
+                0% в роботі
+            {% endif %}
+        </p>
     </div>
 </div>
 
 {% if locations %}
-<div class="table-responsive">
-    <!-- Панель пошуку (додайте перед таблицею) -->
-    <div class="search-container">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="input-group">
-                        <span class="input-group-text">🔍</span>
-                        <input type="text"
-                            id="searchInput"
-                            class="form-control form-control-lg"
-                            placeholder="Введіть адресу для пошуку"
-                            autocomplete="off">
-                        <button class="btn btn-outline-secondary"
-                                type="button"
-                                id="clearSearch"
-                                title="Очистити пошук">✕</button>
-                    </div>
-                    <div id="searchResults" class="search-results-info"></div>
-                </div>
-            </div>
+<div class="search-section">
+    <form class="search-section__form">
+        <div class="search-section__input-group">
+            <span class="search-section__addon">🔍</span>
+            <input type="text"
+                id="searchInput"
+                class="search-section__input"
+                placeholder="Введіть адресу для пошуку"
+                autocomplete="off">
+            <button class="search-section__button"
+                    type="button"
+                    id="clearSearch"
+                    title="Очистити пошук">✕</button>
         </div>
-    </div>
-    <table class="table table-striped" style="text-align: center;">
+        <div id="searchResults" class="search-section__info"></div>
+    </form>
+</div>
+
+<div class="data-table-container">
+    <table class="data-table">
         <thead>
-            <tr>
-                <th style="width: fit-content;">!</th>
-                <th>Адреса</th>
-                <th>Тип проблеми</th>
-                <th>Статус</th>
-                <th>Дата створення</th>
-                <th>Дата виконання</th>
-                <th>Координати</th>
-                <th>Дії</th>
+            <tr class="data-table__header">
+                <th class="data-table__cell">!</th>
+                <th class="data-table__cell">Адреса</th>
+                <th class="data-table__cell">Тип проблеми</th>
+                <th class="data-table__cell">Статус</th>
+                <th class="data-table__cell">Дата створення</th>
+                <th class="data-table__cell">Дата виконання</th>
+                <th class="data-table__cell">Координати</th>
+                <th class="data-table__cell">Дії</th>
             </tr>
         </thead>
         <tbody>
             {% for location in locations %}
-            <tr class="location-row" data-address="{{ location.address }}">
-                <td>
+            <tr class="data-table__row" data-address="{{ location.address }}">
+                <td class="data-table__cell">
                     {% if location.priority == 'Високий' %}
-                        <span class="badge bg-danger rounded-circle" style="width: 12px; height: 12px;" title="Високий пріоритет">&nbsp;</span>
+                        <span class="priority-indicator priority-indicator--high" title="Високий пріоритет">&nbsp;</span>
                     {% elif location.priority == 'Середній' %}
-                        <span class="badge bg-warning rounded-circle" style="width: 12px; height: 12px;" title="Середній пріоритет">&nbsp;</span>
+                        <span class="priority-indicator priority-indicator--medium" title="Середній пріоритет">&nbsp;</span>
                     {% else %}
-                        <span class="badge bg-success rounded-circle" style="width: 12px; height: 12px;" title="Низький пріоритет">&nbsp;</span>
+                        <span class="priority-indicator priority-indicator--low" title="Низький пріоритет">&nbsp;</span>
                     {% endif %}
                 </td>
-                <td style="text-align: left;" class="address-cell">{{ location.address }}</td>
-                <td>
+                <td class="data-table__cell data-table__cell--left">{{ location.address }}</td>
+                <td class="data-table__cell">
                     {% if location.problem_type == 'Гілля' %}
-                        <span class="badge border border-warning text-warning bg-transparent">{{ location.problem_type }}</span>
+                        <span class="badge badge--branches">{{ location.problem_type }}</span>
                     {% elif location.problem_type == 'Листя' %}
-                        <span class="badge border border-success text-success bg-transparent">{{ location.problem_type }}</span>
+                        <span class="badge badge--leaves">{{ location.problem_type }}</span>
                     {% elif location.problem_type == 'Звалища' %}
-                        <span class="badge border border-danger text-danger bg-transparent">{{ location.problem_type }}</span>
+                        <span class="badge badge--dumps">{{ location.problem_type }}</span>
                     {% else %}
-                        <span class="badge border border-secondary text-secondary bg-transparent">{{ location.problem_type }}</span>
+                        <span class="badge badge--default">{{ location.problem_type }}</span>
                     {% endif %}
                 </td>
-                <td>
+                <td class="data-table__cell">
                     {% if location.status == 'completed' %}
-                        <span class="badge border border-success text-success bg-transparent">Виконано</span>
+                        <span class="badge badge--completed">Виконано</span>
                     {% elif location.status == 'in_progress' %}
-                        <span class="badge border border-primary text-primary bg-transparent">В роботі</span>
+                        <span class="badge badge--in-progress">В роботі</span>
                     {% else %}
-                        <span class="badge border border-secondary text-secondary bg-transparent">В роботі</span>
+                        <span class="badge badge--default">В роботі</span>
                     {% endif %}
                 </td>
-                <td>{{ location.date_created.strftime('%d.%m.%Y') }}</td>
-                <td>
+                <td class="data-table__cell">{{ location.date_created.strftime('%d.%m.%Y') }}</td>
+                <td class="data-table__cell">
                     {% if location.date_completed %}
-                        <span class="text-success fw-bold"">{{ location.date_completed.strftime('%d.%m.%Y') }}</span>
+                        <span class="data-table__success-text">{{ location.date_completed.strftime('%d.%m.%Y') }}</span>
                     {% else %}
-                        <span class="text-muted">—</span>
+                        <span class="data-table__muted-text">—</span>
                     {% endif %}
                 </td>
-                <td>
-                    <small class="text-muted">
+                <td class="data-table__cell">
+                    <small class="data-table__coordinates">
                         {{ "%.4f"|format(location.latitude) }}, {{ "%.4f"|format(location.longitude) }}
                     </small>
                 </td>
-                <td>
-                    <div class="d-flex gap-1" role="group">
+                <td class="data-table__cell">
+                    <div class="data-table__actions">
                         <a href="{{ url_for('location_map', location_id=location.id) }}"
-                            class="btn btn-sm btn-info text-white"
-                            style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
+                            class="button button--primary button--small button--square"
                             title="Переглянути на карті">
                             <i class="fas fa-map-marker-alt"></i>
                         </a>
                         {% if current_user.is_authenticated and current_user.is_admin() %}
                             <a href="{{ url_for('edit_location', id=location.id) }}"
-                                class="btn btn-sm btn-primary"
-                                style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
+                                class="button button--primary button--small button--square"
                                 title="Редагувати">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                             <button type="button"
-                                    class="btn btn-sm btn-danger"
-                                    style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
+                                    class="button button--danger button--small button--square"
                                     data-location-id="{{ location.id }}"
                                     data-location-address="{{ location.address }}"
                                     onclick="confirmDeleteSafe(this)"
@@ -245,8 +213,7 @@
                             {% if location.status != 'completed' %}
                                 <button type="button"
                                     data-problem-type="{{ location.problem_type }}"
-                                    class="btn btn-sm btn-success"
-                                    style="width: 35px; height: 35px; border: none; display: flex; align-items: center; justify-content: center;"
+                                    class="button button--success button--small button--square"
                                     data-location-id="{{ location.id }}"
                                     data-location-address="{{ location.address }}"
                                     onclick="confirmComplete(this)"
@@ -263,55 +230,55 @@
     </table>
 </div>
 {% else %}
-    <div class="alert alert-info">
+    <div class="alert alert--info">
         <h4>Немає дислокацій за вибраними фільтрами</h4>
         <p>Спробуйте змінити фільтри або додайте нову дислокацію.</p>
         {% if current_user.is_authenticated and current_user.is_admin() %}
-            <a href="{{ url_for('add_location') }}" class="btn btn-primary">Додати дислокацію</a>
+            <a href="{{ url_for('add_location') }}" class="button button--primary">Додати дислокацію</a>
         {% endif %}
     </div>
 {% endif %}
 
 {# Модальне вікно для підтвердження закриття завдання #}
-<div class="modal fade" id="completeModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Закрити завдання</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<div class="modal" id="completeModal" tabindex="-1">
+    <div class="modal__dialog">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h5 class="modal__title">Закрити завдання</h5>
+                <button type="button" class="modal__close" onclick="hideModal('completeModal')"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal__body">
                 <p>Закрити завдання:</p>
-                <p><strong id="completeAddress"></strong>: <span class="badge bg-secondary" id="completeProblemType"></span></p>
-                <div class="mb-3">
-                    <label for="completionDate" class="form-label">Дата виконання:</label>
-                    <input type="date" class="form-control" id="completionDate" required>
+                <p><strong id="completeAddress"></strong>: <span class="badge badge--filled" id="completeProblemType"></span></p>
+                <div class="form__group">
+                    <label for="completionDate" class="form__label">Дата виконання:</label>
+                    <input type="date" class="form__input" id="completionDate" required>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
-                <a href="#" id="confirmCompleteBtn" class="btn btn-success">Закрити завдання</a>
+            <div class="modal__footer">
+                <button type="button" class="button button--secondary" onclick="hideModal('completeModal')">Скасувати</button>
+                <a href="#" id="confirmCompleteBtn" class="button button--success">Закрити завдання</a>
             </div>
         </div>
     </div>
 </div>
 
 {# Модальне вікно для підтвердження видалення #}
-<div class="modal fade" id="deleteModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Підтвердження видалення</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<div class="modal" id="deleteModal" tabindex="-1">
+    <div class="modal__dialog">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h5 class="modal__title">Підтвердження видалення</h5>
+                <button type="button" class="modal__close" onclick="hideModal('deleteModal')"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal__body">
                 <p>Ви впевнені, що хочете видалити дислокацію:</p>
                 <p><strong id="deleteAddress"></strong></p>
-                <p class="text-danger"><small>Цю дію неможливо скасувати!</small></p>
+                <p class="modal__warning">Цю дію неможливо скасувати!</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
-                <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Видалити</a>
+            <div class="modal__footer">
+                <button type="button" class="button button--secondary" onclick="hideModal('deleteModal')">Скасувати</button>
+                <a href="#" id="confirmDeleteBtn" class="button button--danger">Видалити</a>
             </div>
         </div>
     </div>
@@ -319,4 +286,40 @@
 
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 <script src="{{ url_for('static', filename='js/livesearch.js') }}"></script>
+
+<script>
+function confirmComplete(button) {
+    const locationId = button.getAttribute('data-location-id');
+    const locationAddress = button.getAttribute('data-location-address');
+    const problemType = button.getAttribute('data-problem-type');
+
+    document.getElementById('completeAddress').textContent = locationAddress;
+    document.getElementById('completeProblemType').textContent = problemType;
+
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('completionDate').value = today;
+
+    document.getElementById('confirmCompleteBtn').href = `/complete_location/${locationId}?date=${today}`;
+
+    showModal('completeModal');
+}
+
+function confirmDeleteSafe(button) {
+    const locationId = button.getAttribute('data-location-id');
+    const locationAddress = button.getAttribute('data-location-address');
+
+    document.getElementById('deleteAddress').textContent = locationAddress;
+    document.getElementById('confirmDeleteBtn').href = `/delete_location/${locationId}`;
+
+    showModal('deleteModal');
+}
+
+// Update completion date when changed
+document.getElementById('completionDate').addEventListener('change', function() {
+    const currentHref = document.getElementById('confirmCompleteBtn').href;
+    const baseHref = currentHref.split('?date=')[0];
+    document.getElementById('confirmCompleteBtn').href = baseHref + '?date=' + this.value;
+});
+</script>
+
 {% endblock %}

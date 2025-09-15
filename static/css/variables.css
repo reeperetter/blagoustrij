@@ -1,10 +1,15 @@
 :root {
     --body-bg: #f8f9fa;
-    --white: #fff;
+    --cards-bg: #f8f9fa;
+    --white: #ffffff;
     --white-grey: #dee2e6;
     --grey: #6c757d;
-    --dark-grey: #212529;
+    --font-color: #212529;
+    --font-color-light: #495057;
+    --transparent-white: rgba(255, 255, 255, 0.1);
+    --transparent-black: rgba(0, 0, 0, 0.1);
     --blue: #0d6efd;
+    --light-blue-border: #e9ecef;
 
     --ff: "system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"";
 }

@@ -6,25 +6,27 @@
         <title>{% block title %}Хортицький район{% endblock %}</title>
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
         {# Bootstrap CSS #}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
     <body>
         {# Навігаційна панель #}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url_for('index') }}">Хортицький район</a>
-                <div class="navbar-nav ms-auto">
-                    {% if current_user.is_authenticated %}
-                    <span class="navbar-text me-3">Привіт, {{ current_user.username }}!</span>
-                    {% if current_user.is_admin() %}
-                    <span class="badge bg-warning me-2 d-flex align-items-center">Адмін</span>
-                    {% endif %}
-                    <a class="nav-link" href="{{ url_for('logout') }}">Вийти</a>
-                    {% else %}
-                    <a class="nav-link" href="{{ url_for('login') }}">Увійти</a>
-                    {% endif %}
+        <nav class="navigation">
+            <div class="layout">
+                <div class="navigation__container">
+                    <a class="navigation__brand" href="{{ url_for('index') }}">Хортицький район</a>
+                    <div class="navigation__menu">
+                        {% if current_user.is_authenticated %}
+                        <span class="navigation__text">Привіт, {{ current_user.username }}!</span>
+                        {% if current_user.is_admin() %}
+                        <span class="alert alert--info">Адмін</span>
+                        {% endif %}
+                        <a class="navigation__link" href="{{ url_for('logout') }}">Вийти</a>
+                        {% else %}
+                        <a class="navigation__link" href="{{ url_for('login') }}">Увійти</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </nav>
@@ -40,9 +42,42 @@
         </div> -->
 
         {# Основний контент #}
-        <div class="container mt-4">{% block content %}{% endblock %}</div>
+        <div class="layout layout--with-top-margin">{% block content %}{% endblock %}</div>
 
         {# Bootstrap JS #}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
+        <script>
+            // Simple modal functionality
+            function showModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('modal--show');
+                }
+            }
+
+            function hideModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('modal--show');
+                }
+            }
+
+            // Close modal when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    hideModal(e.target.id);
+                }
+            });
+
+            // Close modal with close button
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal__close')) {
+                    const modal = e.target.closest('.modal');
+                    if (modal) {
+                        hideModal(modal.id);
+                    }
+                }
+            });
+        </script>
     </body>
 </html>

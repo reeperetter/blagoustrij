@@ -3,7 +3,7 @@ function setupTableSearch() {
     const searchInput = document.getElementById("searchInput");
     const clearButton = document.getElementById("clearSearch");
     const searchResults = document.getElementById("searchResults");
-    const locationRows = document.querySelectorAll(".location-row");
+    const locationRows = document.querySelectorAll(".data-table__row");
 
     // Перевіряємо наявність елементів
     if (!searchInput || !clearButton || !searchResults) {
@@ -22,7 +22,7 @@ function setupTableSearch() {
             if (!address) return;
 
             const addressLower = address.toLowerCase();
-            const addressCell = row.querySelector(".address-cell");
+            const addressCell = row.querySelector(".data-table__cell--left");
             if (!addressCell) return;
 
             const originalText = addressCell.getAttribute("data-original") || addressCell.textContent;
