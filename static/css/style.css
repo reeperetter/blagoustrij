@@ -29,14 +29,16 @@ body {
 /* Navigation component */
 .navigation {
     background-color: var(--blue);
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
     color: var(--white);
+    line-height: 1;
 }
 
 .navigation__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    line-height: 1;
 }
 
 .navigation__brand {
@@ -477,7 +479,7 @@ body {
 /* Alert component */
 .alert {
     padding: 1rem;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     border: 1px solid transparent;
     border-radius: 4px;
 }
