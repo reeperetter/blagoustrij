@@ -2,70 +2,64 @@
 
 {% block content %}
 <div class="page-header">
-    <div class="page-header__content">
-        <div class="page-header__info">
-            <h1 class="page-header__title">Дислокації проблем</h1>
-            <p class="page-header__subtitle">
-                Показано {{ locations|length }}
-                {% if current_problem_type != 'all' or current_status != 'all' %}
-                    з {{ total_count }} (застосовано фільтри)
-                {% else %}
-                    записів
-                {% endif %}
-            </p>
-        </div>
-        <div class="page-header__actions">
-            <a href="{{ url_for('map_all') }}" class="button button--primary">
-                <i class="fas fa-map"></i> Карта всіх локацій
-            </a>
-            {% if current_user.is_authenticated and current_user.is_admin() %}
-                <a href="{{ url_for('add_location') }}" class="button button--success">
-                    <i class="fas fa-plus"></i> Додати дислокацію
-                </a>
+    <div class="page-header__info">
+        <h1 class="page-header__title">Дислокації проблем</h1>
+        <p class="page-header__subtitle">
+            Показано {{ locations|length }}
+            {% if current_problem_type != 'all' or current_status != 'all' %}
+                з {{ total_count }} (застосовано фільтри)
+            {% else %}
+                записів
             {% endif %}
-        </div>
+        </p>
+    </div>
+    <div class="page-header__actions">
+        <a href="{{ url_for('export_excel', problem_type=current_problem_type, status=current_status) }}"
+            class="button button--success">
+            <i class="fas fa-file-excel"></i> Експорт XLSX
+        </a>
+        <a href="{{ url_for('map_all') }}" class="button button--primary">
+            <i class="fas fa-map"></i> Карта всіх локацій
+        </a>
+        {% if current_user.is_authenticated and current_user.is_admin() %}
+            <a href="{{ url_for('add_location') }}" class="button button--success">
+                <i class="fas fa-plus"></i> Додати дислокацію
+            </a>
+        {% endif %}
     </div>
 </div>
 
 {# Фільтри #}
-<div class="filter-section">
-    <form method="GET" class="filter-section__form">
-        <div class="filter-section__group">
-            <label class="form__label">Тип проблеми</label>
-            <select name="problem_type" class="form__select" onchange="this.form.submit()">
-                <option value="all" {% if current_problem_type == 'all' %}selected{% endif %}>Всі типи</option>
-                <option value="Гілля" {% if current_problem_type == 'Гілля' %}selected{% endif %}>Гілля</option>
-                <option value="Листя" {% if current_problem_type == 'Листя' %}selected{% endif %}>Листя</option>
-                <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
-            </select>
-        </div>
-        <div class="filter-section__group">
-            <label class="form__label">Статус</label>
-            <select name="status" class="form__select" onchange="this.form.submit()">
-                <option value="all" {% if current_status == 'all' %}selected{% endif %}>Всі статуси</option>
-                <option value="in_progress" {% if current_status == 'in_progress' %}selected{% endif %}>В роботі</option>
-                <option value="completed" {% if current_status == 'completed' %}selected{% endif %}>Виконано</option>
-            </select>
-        </div>
-        <div class="filter-section__group">
-            <label class="form__label">Сортування</label>
-            <select name="sort_by" class="form__select" onchange="this.form.submit()">
-                <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>За пріоритетом</option>
-                <option value="alphabet" {% if current_sort == 'alphabet' %}selected{% endif %}>За алфавітом</option>
-            </select>
-            <input type="hidden" name="problem_type" value="{{ current_problem_type }}">
-            <input type="hidden" name="status" value="{{ current_status }}">
-            <input type="hidden" name="priority" value="{{ current_priority }}">
-        </div>
-        <div class="filter-section__actions">
-            <a href="{{ url_for('index') }}" class="button button--secondary">Скинути фільтри</a>
-            <a href="{{ url_for('export_excel', problem_type=current_problem_type, status=current_status) }}"
-                class="button button--success">
-                <i class="fas fa-file-excel"></i> Експорт XLSX
-            </a>
-        </div>
-    </form>
-</div>
+<form method="GET" class="filter-section">
+    <div class="filter-section__group">
+        <label class="form__label">Тип проблеми</label>
+        <select name="problem_type" class="form__select" onchange="this.form.submit()">
+            <option value="all" {% if current_problem_type == 'all' %}selected{% endif %}>Всі типи</option>
+            <option value="Гілля" {% if current_problem_type == 'Гілля' %}selected{% endif %}>Гілля</option>
+            <option value="Листя" {% if current_problem_type == 'Листя' %}selected{% endif %}>Листя</option>
+            <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
+        </select>
+    </div>
+    <div class="filter-section__group">
+        <label class="form__label">Статус</label>
+        <select name="status" class="form__select" onchange="this.form.submit()">
+            <option value="all" {% if current_status == 'all' %}selected{% endif %}>Всі статуси</option>
+            <option value="in_progress" {% if current_status == 'in_progress' %}selected{% endif %}>В роботі</option>
+            <option value="completed" {% if current_status == 'completed' %}selected{% endif %}>Виконано</option>
+        </select>
+    </div>
+    <div class="filter-section__group">
+        <label class="form__label">Сортування</label>
+        <select name="sort_by" class="form__select" onchange="this.form.submit()">
+            <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>За пріоритетом</option>
+            <option value="alphabet" {% if current_sort == 'alphabet' %}selected{% endif %}>За алфавітом</option>
+        </select>
+        <input type="hidden" name="problem_type" value="{{ current_problem_type }}">
+        <input type="hidden" name="status" value="{{ current_status }}">
+        <input type="hidden" name="priority" value="{{ current_priority }}">
+    </div>
+    <a href="{{ url_for('index') }}" class="button button--secondary">Скинути фільтри</a>
+</form>
 
 {# Статистичні картки для поточного фільтру #}
 <div class="stats-grid">

@@ -1,6 +1,5 @@
 @import "variables.css";
 
-/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +16,7 @@ body {
 /* Layout component */
 .layout {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1320px;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -71,10 +70,17 @@ body {
     margin: 0;
 }
 
-/* Page header component */
 .page-header {
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     margin-bottom: 2rem;
+}
+
+.page-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .page-header__title {
@@ -83,13 +89,32 @@ body {
     margin-bottom: 0.5rem;
 }
 
+.page-header__subtitle {
+    color: var(--grey);
+}
+
+.filter-section {
+    background: var(--white);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 1px solid var(--transparent-black);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-section__group {
+    flex: 1 0 25%;
+}
+
 /* Search section component */
 
 .search-section {
     margin-bottom: 2rem;
     padding: 1rem 0;
     background-color: var(--white);
-    border-radius: 8px;
+    border-radius: 0.5rem;
 
     position: sticky;
     top: 0;
@@ -296,6 +321,17 @@ body {
 .button--primary {
     background-color: var(--blue);
     color: var(--white);
+}
+
+.button--secondary {
+    color: var(--grey);
+    padding: 0.75rem;
+    border: 1px solid var(--grey);
+    align-self: end;
+}
+
+.button--secondary:visited {
+    color: var(--grey);
 }
 
 .button--primary:hover {
@@ -553,7 +589,7 @@ body {
 }
 
 /* Responsive design */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .layout {
         padding: 0 10px;
     }
@@ -592,7 +628,7 @@ body {
     }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (max-width: 992px) {
     .layout {
         max-width: 960px;
     }
@@ -602,23 +638,9 @@ body {
     }
 }
 
-@media (min-width: 992px) and (max-width: 1399px) {
+@media (max-width: 1400px) {
     .layout {
         max-width: 1140px;
-    }
-}
-
-@media (min-width: 1400px) {
-    .layout {
-        max-width: 1320px;
-    }
-
-    .page-header__title {
-        font-size: 3rem;
-    }
-
-    .search-section {
-        padding: 2rem 0;
     }
 }
 
@@ -700,10 +722,10 @@ body {
     }
 
     .highlight {
-    background-color: var(--highlight);
-    color: var(--dt-border-1);
-    padding: 0.1rem 0.2rem;
-    border-radius: 0.25rem;
-    font-weight: bold;
+        background-color: var(--highlight);
+        color: var(--dt-border-1);
+        padding: 0.1rem 0.2rem;
+        border-radius: 0.25rem;
+        font-weight: bold;
     }
 }
