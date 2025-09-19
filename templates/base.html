@@ -22,7 +22,7 @@
                         {% if current_user.is_authenticated %}
                         <span class="navigation__text">Привіт, {{ current_user.username }}!</span>
                         {% if current_user.is_admin() %}
-                        <span class="alert alert--info">Адмін</span>
+                        <span class="admin">Адмін</span>
                         {% endif %}
                         <a class="navigation__link" href="{{ url_for('logout') }}">Вийти</a>
                         {% else %}
