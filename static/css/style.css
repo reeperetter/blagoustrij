@@ -688,6 +688,7 @@ body {
 
     .data-table__cell {
         border-bottom-color: var(--dt-border-1);
+        text-align: center;
     }
 
     .data-table__row:nth-of-type(odd) {
@@ -696,6 +697,11 @@ body {
 
     .data-table__row:hover {
         background-color: var(--dt-border-1);
+    }
+
+    .priority-indicator {
+        margin: auto;
+        vertical-align: middle;
     }
 
     .form__input,
