@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+*::selection {
+    color: var(--red);
+}
+
 body {
     font-family: var(--ff);
     line-height: 1.5;
@@ -128,7 +132,6 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    /* border-bottom: 2px solid var(--light-blue-border); */
     box-shadow: 0 2px 4px var(--transparent-black);
 }
 
@@ -176,14 +179,6 @@ body {
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s;
-}
-
-.data-table__row {
-    transition: all 0.3s ease;
-}
-
-.data-table__row.hidden {
-    display: none !important;
 }
 
 .search-section__info {
@@ -238,7 +233,7 @@ body {
 /* Statistics grid component */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 1rem;
     margin-bottom: 1rem;
 }
@@ -280,14 +275,27 @@ body {
 }
 
 /* Data table component */
+
+.data-table-container {
+    width: 100%;
+}
+
 .data-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1rem;
     background-color: var(--white);
-    border-radius: 8px;
+    border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 2px 4px var(--transparent-black);
+}
+
+.data-table__row {
+    transition: all 0.3s ease;
+}
+
+.data-table__row.hidden {
+    display: none !important;
 }
 
 .data-table__header {
@@ -551,6 +559,7 @@ body {
 
 /* Badge component */
 .badge {
+    text-wrap: nowrap;
     padding: 0.35em 0.65em;
     font-size: 0.75em;
     font-weight: 700;
@@ -647,11 +656,20 @@ body {
 
 @media (max-width: 992px) {
     .layout {
+        margin-top: 0.5rem;
         max-width: 960px;
     }
 
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .page-header__title {
+        line-height: 1;
+    }
+
+    .page-header__subtitle {
+        margin-bottom: 0.5rem;
+    }
+
+    .data-table {
+        font-size: 0.7rem;
     }
 }
 
