@@ -1,0 +1,64 @@
+@import "variables.css";
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.location-form {
+    display: flex;
+    gap: 1rem;
+    height: 90vh;
+}
+
+.location-form__form-section,
+.location-form__map-section,
+.stats-card,
+.stats-card__content,
+.location-form__form-section form,
+.form__group--expand {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.location-form__map-section {
+    flex-basis: 40%;
+}
+
+.stats-card__title {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--light-blue-border);
+}
+
+.form__input-text {
+    flex: 1;
+    min-height: 8rem;
+}
+
+.location-form__coordinates {
+    display: flex;
+    gap: 1rem;
+}
+
+.location-form__details {
+    display: flex;
+    gap: 1rem;
+    justify-content: stretch;
+    width: 100%;
+}
+
+.location-form__details .form__group {
+    flex: 1;
+}
+
+.form__actions {
+    margin-bottom: 1rem;
+}
+
+.location-form__map {
+    flex: 1;
+    min-height: 0;
+}

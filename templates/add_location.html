@@ -1,47 +1,36 @@
 {% extends "base.html" %} {% block title %} {% if location %}Редагування{% else %}Додавання{% endif %} дислокації - Хортицький район {% endblock %} {%
 block content %} {# Спочатку підключаємо CSS #}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add-location.css') }}" />
 
 <div class="location-form">
-    <div class="location-form__container">
-        <div class="location-form__form-section">
-            <div class="stats-card">
-                <div class="stats-card__title">Форма дислокації</div>
+    <!-- <div class="location-form__container"> -->
+    <div class="location-form__form-section">
+        <div class="stats-card">
+            <div class="stats-card__title">Форма дислокації</div>
+            <div class="stats-card__content">
                 <form method="POST">
                     {{ form.hidden_tag() }}
-
-                    <div class="form__group">
-                        {{ form.address.label(class="form__label") }}
-                        {{ form.address(class="form__input", id="address") }}
-                    </div>
-
+                    <div class="form__group">{{ form.address.label(class="form__label") }} {{ form.address(class="form__input", id="address") }}</div>
                     <div class="location-form__coordinates">
                         <div class="form__group">
-                            {{ form.latitude.label(class="form__label") }}
-                            {{ form.latitude(class="form__input form__input--readonly", readonly=true, id="latitude") }}
+                            {{ form.latitude.label(class="form__label") }} {{ form.latitude(class="form__input form__input--readonly", readonly=true,
+                            id="latitude") }}
                         </div>
                         <div class="form__group">
-                            {{ form.longitude.label(class="form__label") }}
-                            {{ form.longitude(class="form__input form__input--readonly", readonly=true, id="longitude") }}
+                            {{ form.longitude.label(class="form__label") }} {{ form.longitude(class="form__input form__input--readonly",
+                            readonly=true, id="longitude") }}
                         </div>
                     </div>
-
                     <div class="location-form__details">
                         <div class="form__group">
-                            {{ form.problem_type.label(class="form__label") }}
-                            {{ form.problem_type(class="form__select") }}
+                            {{ form.problem_type.label(class="form__label") }} {{ form.problem_type(class="form__select") }}
                         </div>
-                        <div class="form__group">
-                            {{ form.priority.label(class="form__label") }}
-                            {{ form.priority(class="form__select") }}
-                        </div>
+                        <div class="form__group">{{ form.priority.label(class="form__label") }} {{ form.priority(class="form__select") }}</div>
                     </div>
-
-                    <div class="form__group">
-                        {{ form.description.label(class="form__label") }}
-                        {{ form.description(class="form__input") }}
+                    <div class="form__group form__group--expand">
+                        {{ form.description.label(class="form__label") }} {{ form.description(class="form__input form__input-text") }}
                     </div>
-
                     <div class="form__actions">
                         {{ form.submit(class="button button--success") }}
                         <a href="{{ url_for('index') }}" class="button button--secondary">Скасувати</a>
@@ -49,15 +38,17 @@ block content %} {# Спочатку підключаємо CSS #}
                 </form>
             </div>
         </div>
+    </div>
 
-        <div class="location-form__map-section">
-            <div class="stats-card">
-                <div class="stats-card__title">Карта</div>
-                <div class="location-form__map" id="map" data-default-lat="47.82085887156977" data-default-lng="35.0326454729596">
-                </div>
+    <div class="location-form__map-section">
+        <div class="stats-card">
+            <div class="stats-card__title">Карта</div>
+            <div class="stats-card__content">
+                <div class="location-form__map" id="map" data-default-lat="47.82085887156977" data-default-lng="35.0326454729596"></div>
             </div>
         </div>
     </div>
+    <!-- </div> -->
 </div>
 
 {# Підключаємо JS та чекаємо завантаження #}
