@@ -62,3 +62,47 @@ body {
     flex: 1;
     min-height: 0;
 }
+
+@media (max-width: 425px) {
+    
+    .stats-card__title {
+        font-size: 0.8rem;
+    }
+
+    .location-form {
+        flex-direction: column-reverse;
+        height: 100vh;
+    }
+
+    .location-form__map-section {
+        flex: 0 0 40%;
+    }
+
+    .location-form__form-section {
+        flex: 1;
+    }
+
+    .stats-card__title {
+        margin-bottom: 0.5rem;
+    }
+
+    .form__label {
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .form__input-text {
+        min-height: 4rem;
+    }
+
+    .form__input,
+    .form__select {
+        font-size: 0.8rem;
+        color: var(--font-color) !important;
+    }
+
+    .form__actions {
+        display: flex;
+        flex-direction: row;
+    }
+}
