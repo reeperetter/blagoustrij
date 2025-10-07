@@ -24,9 +24,19 @@ block content %} {# Спочатку підключаємо CSS #}
                     </div>
                     <div class="location-form__details">
                         <div class="form__group">
-                            {{ form.problem_type.label(class="form__label") }} {{ form.problem_type(class="form__select") }}
+                            {{ form.problem_type.label(class="form__label") }}
+                            <div class="select">
+                                {{ form.problem_type(class="form__select") }}
+                                <i class="fas fa-chevron-down arrow"></i>
+                            </div>
                         </div>
-                        <div class="form__group">{{ form.priority.label(class="form__label") }} {{ form.priority(class="form__select") }}</div>
+                        <div class="form__group">
+                            {{ form.priority.label(class="form__label") }}
+                            <div class="select">
+                                {{ form.priority(class="form__select") }}
+                                <i class="fas fa-chevron-down arrow"></i>
+                            </div>
+                        </div>
                     </div>
                     <div class="form__group form__group--expand">
                         {{ form.description.label(class="form__label") }} {{ form.description(class="form__input form__input-text") }}

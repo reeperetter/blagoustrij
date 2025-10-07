@@ -20,7 +20,7 @@
                     </h3>
                     <p class="subtitle">
                         Показано {{ locations|length }} завдань в роботі
-                        {% if current_problem_type != 'all' %} 
+                        {% if current_problem_type != 'all' %}
                             (тип: {{ current_problem_type }})
                         {% endif %}
                     </p>
@@ -66,21 +66,27 @@
                         <form method="GET">
                             <div class="form-group">
                                 <label>Тип проблеми:</label>
-                                <select name="problem_type" class="form-select" onchange="this.form.submit()">
-                                    <option value="all" {% if current_problem_type == 'all' %}selected{% endif %}>Всі типи</option>
-                                    <option value="Гілля" {% if current_problem_type == 'Гілля' %}selected{% endif %}>Гілля</option>
-                                    <option value="Листя" {% if current_problem_type == 'Листя' %}selected{% endif %}>Листя</option>
-                                    <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
-                                </select>
+                                <div class="select">
+                                    <select name="problem_type" class="form-select" onchange="this.form.submit()">
+                                        <option value="all" {% if current_problem_type == 'all' %}selected{% endif %}>Всі типи</option>
+                                        <option value="Гілля" {% if current_problem_type == 'Гілля' %}selected{% endif %}>Гілля</option>
+                                        <option value="Листя" {% if current_problem_type == 'Листя' %}selected{% endif %}>Листя</option>
+                                        <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down arrow"></i>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Пріоритет:</label>
-                                <select name="priority" class="form-select" onchange="this.form.submit()">
-                                    <option value="all" {% if current_priority == 'all' %}selected{% endif %}>Всі пріоритети</option>
-                                    <option value="Високий" {% if current_priority == 'Високий' %}selected{% endif %}>Високий</option>
-                                    <option value="Середній" {% if current_priority == 'Середній' %}selected{% endif %}>Середній</option>
-                                    <option value="Низький" {% if current_priority == 'Низький' %}selected{% endif %}>Низький</option>
-                                </select>
+                                <div class="select">
+                                    <select name="priority" class="form-select" onchange="this.form.submit()">
+                                        <option value="all" {% if current_priority == 'all' %}selected{% endif %}>Всі пріоритети</option>
+                                        <option value="Високий" {% if current_priority == 'Високий' %}selected{% endif %}>Високий</option>
+                                        <option value="Середній" {% if current_priority == 'Середній' %}selected{% endif %}>Середній</option>
+                                        <option value="Низький" {% if current_priority == 'Низький' %}selected{% endif %}>Низький</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down arrow"></i>
+                                </div>
                             </div>
                             <div class="form-group form-group-btn">
                                 <a href="{{ url_for('map_all') }}" class="btn btn-outline">
@@ -131,8 +137,8 @@
                     </div>
                     <div class="card-body locations-list">
                         {% for location in locations %}
-                        <div class="location-item" 
-                             data-lat="{{ location.latitude }}" 
+                        <div class="location-item"
+                             data-lat="{{ location.latitude }}"
                              data-lng="{{ location.longitude }}"
                              data-id="{{ location.id }}"
                              data-action="focus-location">

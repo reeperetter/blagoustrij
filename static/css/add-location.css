@@ -54,6 +54,25 @@ body {
     flex: 1;
 }
 
+.select {
+    position: relative;
+}
+
+.select .arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #333;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.select select:focus + .arrow {
+  transform: translateY(-50%) rotate(180deg);
+  color: #007bff;
+}
+
 .form__actions {
     margin-bottom: 1rem;
 }
@@ -104,5 +123,12 @@ body {
     .form__actions {
         display: flex;
         flex-direction: row;
+    }
+}
+
+@media (max-width: 320px) {
+    .button {
+        padding: 0.5rem;
+        line-height: 1.2;
     }
 }

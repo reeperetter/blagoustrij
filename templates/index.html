@@ -33,27 +33,36 @@
 <form method="GET" class="filter-section">
     <div class="filter-section__group">
         <label class="form__label">Тип проблеми</label>
-        <select name="problem_type" class="form__select" onchange="this.form.submit()">
-            <option value="all" {% if current_problem_type == 'all' %}selected{% endif %}>Всі типи</option>
-            <option value="Гілля" {% if current_problem_type == 'Гілля' %}selected{% endif %}>Гілля</option>
-            <option value="Листя" {% if current_problem_type == 'Листя' %}selected{% endif %}>Листя</option>
-            <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
-        </select>
+        <div class="select">
+            <select name="problem_type" class="form__select" onchange="this.form.submit()">
+                <option value="all" {% if current_problem_type == 'all' %}selected{% endif %}>Всі типи</option>
+                <option value="Гілля" {% if current_problem_type == 'Гілля' %}selected{% endif %}>Гілля</option>
+                <option value="Листя" {% if current_problem_type == 'Листя' %}selected{% endif %}>Листя</option>
+                <option value="Звалища" {% if current_problem_type == 'Звалища' %}selected{% endif %}>Звалища</option>
+            </select>
+            <i class="fas fa-chevron-down arrow"></i>
+        </div>
     </div>
     <div class="filter-section__group">
         <label class="form__label">Статус</label>
-        <select name="status" class="form__select" onchange="this.form.submit()">
-            <option value="all" {% if current_status == 'all' %}selected{% endif %}>Всі статуси</option>
-            <option value="in_progress" {% if current_status == 'in_progress' %}selected{% endif %}>В роботі</option>
-            <option value="completed" {% if current_status == 'completed' %}selected{% endif %}>Виконано</option>
-        </select>
+        <div class="select">
+            <select name="status" class="form__select" onchange="this.form.submit()">
+                <option value="all" {% if current_status == 'all' %}selected{% endif %}>Всі статуси</option>
+                <option value="in_progress" {% if current_status == 'in_progress' %}selected{% endif %}>В роботі</option>
+                <option value="completed" {% if current_status == 'completed' %}selected{% endif %}>Виконано</option>
+            </select>
+            <i class="fas fa-chevron-down arrow"></i>
+        </div>
     </div>
     <div class="filter-section__group">
         <label class="form__label">Сортування</label>
-        <select name="sort_by" class="form__select" onchange="this.form.submit()">
-            <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>За пріоритетом</option>
-            <option value="alphabet" {% if current_sort == 'alphabet' %}selected{% endif %}>За алфавітом</option>
-        </select>
+        <div class="select">
+            <select name="sort_by" class="form__select" onchange="this.form.submit()">
+                <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>За пріоритетом</option>
+                <option value="alphabet" {% if current_sort == 'alphabet' %}selected{% endif %}>За алфавітом</option>
+            </select>
+            <i class="fas fa-chevron-down arrow"></i>
+        </div>
         <input type="hidden" name="problem_type" value="{{ current_problem_type }}">
         <input type="hidden" name="status" value="{{ current_status }}">
         <input type="hidden" name="priority" value="{{ current_priority }}">
