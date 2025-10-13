@@ -760,19 +760,77 @@ body {
 }
 
 @media (max-width: 425px) {
+    .layout {
+        max-width: 415px;
+        margin-top: 0.75rem;
+    }
+
+    .button--success,
+    .button--primary {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+        line-height: 1.2;
+    }
+
+    .filter-section {
+        gap: 0.5rem;
+    }
+
+    .filter-section,
+    .stats-grid {
+        margin-bottom: 0.5rem;
+    }
+
+    .form__label {
+        margin-bottom: 0;
+    }
+
     .navigation__brand,
     .navigation__text,
     .admin,
     .navigation__link {
         font-size: 0.8rem;
     }
+
     .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 3fr;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    .stats-card {
+        flex: 1 0 auto;
+        min-width: 30%;
+        padding: 0.25rem;
     }
 
     .search-section__form {
         flex-direction: column;
-        gap: 0.5rem;
+    }
+
+    #searchResults {
+        min-width: 100%;
+        font-size: 0.85rem;
+        margin-bottom: 0;
+    }
+
+    #searchInput,
+    .search-section__addon,
+    .search-section__button {
+        font-size: 0.8rem;
+    }
+
+    .search-section__button {
+        padding: 0 0.8rem;
+    }
+
+    .data-table-container {
+        overflow-x: scroll;
+    }
+
+    .data-table__cell {
+        font-size: 0.75rem;
     }
 }
 
