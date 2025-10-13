@@ -17,7 +17,7 @@ body {
     background-color: var(--body-bg);
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
@@ -129,18 +129,18 @@ body {
 }
 
 .select .arrow {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #333;
-  transition: transform 0.25s ease, color 0.25s ease;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #333;
+    transition: transform 0.25s ease, color 0.25s ease;
 }
 
 .select select:focus + .arrow {
-  transform: translateY(-50%) rotate(180deg);
-  color: #007bff;
+    transform: translateY(-50%) rotate(180deg);
+    color: #007bff;
 }
 
 .search-section {
@@ -715,6 +715,7 @@ body {
 
     .search-section {
         margin-bottom: 1rem;
+        padding: 0.5rem;
     }
 
     .search-section__addon,
@@ -765,6 +766,14 @@ body {
         margin-top: 0.75rem;
     }
 
+    .page-header__info {
+        min-width: 100%;
+    }
+    .page-header__title,
+    .page-header__subtitle {
+        text-align: center;
+    }
+
     .button--success,
     .button--primary {
         padding: 0.5rem 0.75rem;
@@ -805,6 +814,10 @@ body {
         padding: 0.25rem;
     }
 
+    .search-section {
+        padding-bottom: 0.1rem;
+    }
+
     .search-section__form {
         flex-direction: column;
     }
@@ -831,6 +844,47 @@ body {
 
     .data-table__cell {
         font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .filter-section {
+        flex-wrap: wrap;
+    }
+
+    .button--secondary {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .button--success {
+        padding: 0.5rem;
+    }
+
+    .stats-grid {
+        flex-wrap: wrap;
+    }
+
+    .stats-card:first-child {
+        min-width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .stats-card:first-child > .stats-card__description {
+        display: none;
+    }
+
+    .stats-card__value {
+        line-height: 1;
+    }
+
+    .search-section {
+        margin-bottom: 0;
     }
 }
 
