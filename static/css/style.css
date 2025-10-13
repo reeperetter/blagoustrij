@@ -672,6 +672,10 @@ body {
     .data-table {
         font-size: 0.75rem;
     }
+
+    .button--secondary {
+        padding: 0.5rem 1.5rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -679,20 +683,38 @@ body {
         padding: 0 10px;
     }
 
+    .filter-section {
+        padding: 0.5rem;
+    }
+
+    .form__label {
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .form__select {
+        font-size: 0.75rem;
+    }
+
+    .button--secondary {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+
     .stats-card__title {
-        font-size: 1rem;
+        font-size: 0.75rem;
     }
 
     .stats-card__value {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .stats-card__description {
-        font-size: 0.9rem;
+        font-size: 0.65rem;
     }
 
-    .search-section__input-group {
-        flex-direction: column;
+    .search-section {
+        margin-bottom: 1rem;
     }
 
     .search-section__addon,
@@ -706,13 +728,34 @@ body {
         font-size: 0.875rem;
     }
 
-    .data-table__actions {
-        flex-direction: column;
-        gap: 0.25rem;
+    .data-table__cell {
+        padding: 0.25rem;
     }
 
     .form__actions {
         flex-direction: column;
+    }
+
+    .page-header {
+        margin-bottom: 0.5rem;
+    }
+
+    .page-header__actions {
+        gap: 0.5rem;
+    }
+
+    .page-header__title {
+        font-size: 1.5rem;
+    }
+
+    .page-header__subtitle {
+        font-size: 0.75rem;
+    }
+
+    .button--success,
+    .button--primary {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
     }
 }
 
