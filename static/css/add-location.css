@@ -59,18 +59,18 @@ body {
 }
 
 .select .arrow {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #333;
-  transition: transform 0.25s ease, color 0.25s ease;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #333;
+    transition: transform 0.25s ease, color 0.25s ease;
 }
 
 .select select:focus + .arrow {
-  transform: translateY(-50%) rotate(180deg);
-  color: #007bff;
+    transform: translateY(-50%) rotate(180deg);
+    color: #007bff;
 }
 
 .form__actions {
@@ -82,8 +82,20 @@ body {
     min-height: 0;
 }
 
+@media (max-width: 768px) {
+    .location-form__coordinates {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    #address,
+    #latitude,
+    #longitude {
+        padding: 0.3rem 0.75rem;
+    }
+}
+
 @media (max-width: 425px) {
-    
     .stats-card__title {
         font-size: 0.8rem;
     }
@@ -95,6 +107,12 @@ body {
 
     .location-form__map-section {
         flex: 0 0 40%;
+    }
+
+    .location-form__coordinates {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0.9rem;
     }
 
     .location-form__form-section {
@@ -124,11 +142,32 @@ body {
         display: flex;
         flex-direction: row;
     }
+
+    #address,
+    #latitude,
+    #longitude {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .button--success,
+    .button--secondary {
+        min-width: 0;
+    }
 }
 
 @media (max-width: 320px) {
-    .button {
-        padding: 0.5rem;
-        line-height: 1.2;
+    .stats-card:first-child {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .stats-card__title {
+        width: 100%;
+    }
+
+    .stats-card__content {
+        min-width: 100%;
     }
 }
