@@ -181,7 +181,7 @@ body {
     grid-template-rows: 2fr 2fr 1fr;
 }
 
-.card-body .locations-list {
+.sidebar .card:last-child .card-body {
     padding: 0;
     flex: 1;
     min-height: 0;
@@ -208,6 +208,7 @@ body {
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     border: 1px solid #ced4da;
+    padding: 0.5rem 2.2rem 0.5rem 0.625rem;
     border-radius: 0.375rem;
     background-color: white;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -370,7 +371,11 @@ body {
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+
     .main-content {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -381,51 +386,17 @@ body {
         min-height: 400px;
     }
 
-    .sidebar {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto;
-        gap: 1rem;
-    }
-
-    .card-stat > .card-body {
-        flex: 1 0 auto;
-    }
-
-    .card-list {
-        grid-column: span 2;
-    }
-
     .card-filters > form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 3fr 2fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        align-items: end;
         gap: 1rem;
     }
 
-    .form-group-btn {
-        grid-column: span 2;
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        gap: 1rem;
-    }
-
-    .header-content {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .header-content .btn-secondary {
-        align-self: flex-start;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 0.5rem;
+    .btn-outline {
+        margin-bottom: 0.75rem;
+        line-height: 1.1;
+        padding: 0.5rem 1rem;
     }
 
     .stats-grid {
@@ -433,17 +404,35 @@ body {
         gap: 0.25rem;
     }
 
+    .header-content {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .btn-secondary {
+        height: min-content;
+    }
+
     .header-info h3 {
         font-size: 1.25rem;
+        margin-bottom: 0;
     }
 
     .card-body,
     .card-header {
-        padding: 0.75rem;
+        padding: 0.6rem 0.75rem;
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 425px) {
+    .header-content {
+        gap: 0.2rem;
+    }
+
+    .main-content {
+        gap: 0;
+    }
+
     #map {
         height: 40vh;
         min-height: 300px;
@@ -451,7 +440,7 @@ body {
 
     .location-header {
         flex-direction: column;
-        gap: 0.25rem;
+        gap: 0.5rem;
     }
 
     .badge {
@@ -459,11 +448,11 @@ body {
     }
 
     .btn-secondary {
-    padding: 0.25rem 0.75rem;
-}
+        padding: 0.25rem 0.75rem;
+    }
 
     .card-header {
-    padding: 0.3rem 0.5rem;
+        padding: 0.3rem 0.5rem;
     }
 
     .card-filters > form {
@@ -477,17 +466,23 @@ body {
         grid-column: 1;
     }
 
-    .form-group-btn > a {
-        font-size: 0.75rem;
-        padding: 0.1rem;
-    }
-
     .stat-number {
         font-size: 1.1rem;
     }
+
+    .sidebar .card:last-child .card-body {
+        padding: 0;
+    }
+
+    .location-item {
+        padding: 0.2rem 1rem;
+    }
 }
 
-/* Скролбар для списку локацій */
+@media (max-width: 320px) {
+
+}
+
 .locations-list::-webkit-scrollbar {
     width: 6px;
 }
@@ -506,7 +501,6 @@ body {
     background: #a8a8a8;
 }
 
-/* Анімації */
 .card {
     animation: fadeIn 0.3s ease-in-out;
 }
