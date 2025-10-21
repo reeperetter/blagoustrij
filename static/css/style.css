@@ -14,7 +14,8 @@ body {
     font-family: var(--ff);
     line-height: 1.5;
     color: var(--font-color);
-    background-color: var(--body-bg);
+    /* background-color: var(--body-bg); */
+    background-image: url(/static/img/bg.webp);
 }
 
 .hidden {
