@@ -228,7 +228,7 @@ def edit_location(id):
 # Зміна статусу дислокації
 
 
-@app.route('/status/<int:id>/<status>')
+@app.route('/complete_location/<int:id>/<status>')
 @login_required
 def change_status(id, status):
     """Зміна статусу дислокації"""
@@ -280,7 +280,7 @@ def create_admin_user():
 
 
 # Видалення дислокації
-@app.route('/delete/<int:id>')
+@app.route('/delete_location/<int:id>')
 @login_required
 def delete_location(id):
     """Видалення дислокації (тільки для адмінів)"""

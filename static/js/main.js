@@ -1,15 +1,30 @@
-// Безпечна функція для data-атрибутів (видалення дислокацій)
+// Функція для показу модального вікна
+function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add("modal--show");
+    }
+}
+
+// Функція для приховування модального вікна
+function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove("modal--show");
+    }
+}
+
+// Функція для підтвердження видалення
 function confirmDeleteSafe(button) {
     const locationId = button.getAttribute("data-location-id");
     const address = button.getAttribute("data-location-address");
 
     // Заповнюємо модальне вікно
     document.getElementById("deleteAddress").textContent = address;
-    document.getElementById("confirmDeleteBtn").href = "/delete/" + locationId;
+    document.getElementById("confirmDeleteBtn").href = "/delete_location/" + locationId;
 
     // Показуємо модальне вікно
-    const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-    deleteModal.show();
+    showModal("deleteModal");
 }
 
 // Функція для підтвердження закриття завдання
@@ -23,39 +38,44 @@ function confirmComplete(button) {
     document.getElementById("completeProblemType").textContent = problemType;
 
     // Встановлюємо поточну дату
-    const today = new Date();
-    const formattedDate = today.toISOString().split("T")[0]; // YYYY-MM-DD формат для input[type="date"]
-    document.getElementById("completionDate").value = formattedDate;
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("completionDate").value = today;
 
-    // Налаштовуємо кнопку підтвердження
-    document.getElementById("confirmCompleteBtn").onclick = function () {
-        const selectedDate = document.getElementById("completionDate").value;
-        window.location.href = `/status/${locationId}/completed?date=${selectedDate}`;
-    };
+    // Налаштовуємо посилання для кнопки підтвердження
+    const confirmBtn = document.getElementById("confirmCompleteBtn");
+    confirmBtn.href = `/complete_location/${locationId}/completed?date=${today}`;
 
     // Показуємо модальне вікно
-    const completeModal = new bootstrap.Modal(document.getElementById("completeModal"));
-    completeModal.show();
+    showModal("completeModal");
 }
 
-// Функція для показу повідомлень
-// function showAlert(message, type = "success") {
-//     const alertHtml = `
-//         <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-//             ${message}
-//             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-//         </div>
-//     `;
+// Оновлення посилання при зміні дати
+document.addEventListener("DOMContentLoaded", function () {
+    const dateInput = document.getElementById("completionDate");
+    if (dateInput) {
+        dateInput.addEventListener("change", function () {
+            const confirmBtn = document.getElementById("confirmCompleteBtn");
+            const currentHref = confirmBtn.href;
+            const baseHref = currentHref.split("?date=")[0];
+            confirmBtn.href = baseHref + "?date=" + this.value;
+        });
+    }
+});
 
-//     const container = document.querySelector(".container-fluid") || document.querySelector(".container");
-//     if (container) {
-//         container.insertAdjacentHTML("afterbegin", alertHtml);
+// Закриття модального вікна при кліку поза ним
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("modal")) {
+        const modalId = e.target.id;
+        hideModal(modalId);
+    }
+});
 
-//         setTimeout(function () {
-//             const alert = container.querySelector(".alert");
-//             if (alert) {
-//                 alert.remove();
-//             }
-//         }, 5000);
-//     }
-// }
+// Закриття модального вікна через кнопку закриття
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("modal__close")) {
+        const modal = e.target.closest(".modal");
+        if (modal) {
+            hideModal(modal.id);
+        }
+    }
+});

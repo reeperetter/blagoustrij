@@ -290,7 +290,7 @@
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 <script src="{{ url_for('static', filename='js/livesearch.js') }}"></script>
 
-<script>
+<!-- <script>
 function confirmComplete(button) {
     const locationId = button.getAttribute('data-location-id');
     const locationAddress = button.getAttribute('data-location-address');
@@ -323,6 +323,6 @@ document.getElementById('completionDate').addEventListener('change', function() 
     const baseHref = currentHref.split('?date=')[0];
     document.getElementById('confirmCompleteBtn').href = baseHref + '?date=' + this.value;
 });
-</script>
+</script> -->
 
 {% endblock %}
